@@ -24,6 +24,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateActivity(Activity activity) 
         {
+            activity.Id = Guid.NewGuid();
+
             await Mediator.Send(new Create.Command() { Activity = activity });
 
             return Ok();
