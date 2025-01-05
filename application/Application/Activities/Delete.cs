@@ -8,7 +8,7 @@ namespace Application.Activities
     {
         public class Command : IRequest
         {
-            public Activity Activity { get; set; }
+            public Guid Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -22,7 +22,7 @@ namespace Application.Activities
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await context.Activities.FindAsync(request.Activity.Id);
+                var activity = await context.Activities.FindAsync(request.Id);
 
                 context.Activities.Remove(activity);
 

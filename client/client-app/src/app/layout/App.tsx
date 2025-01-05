@@ -15,6 +15,7 @@ function App() {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     client.Activities.list()
@@ -68,7 +69,12 @@ function App() {
   }
 
   function handleDeleteActivity(id : string){
-    setActivities([...activities.filter(x => x.id !== id)])
+    setDeleting(true)
+    client.Activities.delete(id).then(() => {
+      setActivities([...activities.filter(x => x.id !== id)])
+      setDeleting(false);
+    })
+    
   }
 
   function handleFormClose(){
@@ -93,6 +99,7 @@ function App() {
           deleteActivity = {handleDeleteActivity}
           createOrEdit = {handleCreateOrEditActivity}
           submitting = {submitting}
+          deleting = {deleting}
         />
       </Container>
      
